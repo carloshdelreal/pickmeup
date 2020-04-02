@@ -3,30 +3,26 @@ import GoogleMapReact from 'google-map-react';
 import Marker from './Marker'
 
 const AnyReactComponent = ({ lat, long, text }) => (
-  <Marker />
+  <Marker text={text} />
 )
 
 class SimpleMap extends Component {
-  static defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
-    zoom: 11
-  };
-
   render() {
+    const { center, zoom } = this.props;
+    if (!center || !zoom){
+      return <div>Loading...</div>
+    }
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyCBzL2nnt27PIghDlqd_u6kQzkjRjGx5Rc" }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
+          defaultCenter={center}
+          defaultZoom={zoom}
         >
           <AnyReactComponent
-            lat={this.props.center.lat}
-            lng={this.props.center.lng}
+            lat={center.lat}
+            lng={center.lng}
             text="My Marker"
           />
         </GoogleMapReact>
