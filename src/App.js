@@ -1,26 +1,52 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import SimpleMap from './components/mainMap'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Wrapper = styled.section`
+  width: 100vw;
+  height: 100vh;
+`;
+
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      center: {
+        lat: 59.95,
+        lng: 30.33
+      },
+      zoom: 11
+    }
+    this.updateLocation = this.updateLocation.bind(this);
+  }
+
+  updateLocation(position){
+    var pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+    console.log(pos);
+    this.setState({center: pos})
+  }
+
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.updateLocation)
+    } else {
+      // Browser doesn't support Geolocation
+      console.log("location not available");
+    }
+  }
+  render (){
+    return (
+      <Wrapper>
+        <SimpleMap
+          center={this.state.center}
+          zoom={this.state.zoom}
+        />
+      </Wrapper>
+    );
+  }
+};
 
 export default App;
