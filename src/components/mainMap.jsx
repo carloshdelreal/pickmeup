@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker'
 
-const AnyReactComponent = ({ lat, long, text }) => (
-  <Marker text={text} />
-)
-
 class SimpleMap extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      show: false,
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(){
+    console.log("click");
+  }
   render() {
     const { center, zoom } = this.props;
     if (!center || !zoom){
@@ -20,10 +27,11 @@ class SimpleMap extends Component {
           defaultCenter={center}
           defaultZoom={zoom}
         >
-          <AnyReactComponent
+          <Marker
             lat={center.lat}
             lng={center.lng}
             text="My Marker"
+            onClick={() => this.handleClick()}
           />
         </GoogleMapReact>
       </div>
