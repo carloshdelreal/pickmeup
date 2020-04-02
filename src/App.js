@@ -11,10 +11,6 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      center: {
-        lat: 59.95,
-        lng: 30.33
-      },
       zoom: 11
     }
     this.updateLocation = this.updateLocation.bind(this);
@@ -38,11 +34,15 @@ class App extends React.Component {
     }
   }
   render (){
+    const { center, zoom } = this.state;
+    if (!center || !zoom){
+      return <div>Loading...</div>
+    }
     return (
       <Wrapper>
         <SimpleMap
-          center={this.state.center}
-          zoom={this.state.zoom}
+          center={center}
+          zoom={zoom}
         />
       </Wrapper>
     );

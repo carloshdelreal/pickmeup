@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker'
 
@@ -14,11 +15,9 @@ class SimpleMap extends Component {
   handleClick(){
     console.log("click");
   }
+
   render() {
     const { center, zoom } = this.props;
-    if (!center || !zoom){
-      return <div>Loading...</div>
-    }
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -37,6 +36,13 @@ class SimpleMap extends Component {
       </div>
     );
   }
+}
+
+SimpleMap.propTypes = {
+  center: PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+  }).isRequired,
 }
 
 export default SimpleMap;
